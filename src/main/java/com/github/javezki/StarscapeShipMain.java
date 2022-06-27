@@ -11,6 +11,6 @@ public class StarscapeShipMain
 {
     public static void main( String[] args )
     {
-        
+    
     }
 }
