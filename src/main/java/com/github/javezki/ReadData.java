@@ -16,19 +16,24 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadData {
 
-    protected File file;
+    public static File file;
 
-    protected HashMap<String, String> attributes;
+    private HashMap<String, String> attributes;
 
     // Constructor initalizes FileInputStream, no params
     public ReadData(String ship) {
+        
+        file = getFile();
+
+        this.attributes = getShipStats(ship);
+    }
+
+    protected File getFile()
+    {
         Path path = Paths.get("");
         String stringPath = path.toAbsolutePath().toString()
                 + "\\src\\main\\java\\com\\github\\javezki\\resources\\CombatDataRaw.xlsx";
-        File file = new File(stringPath);
-        this.file = file;
-
-        this.attributes = getShipStats(ship);
+        return new File(stringPath);
     }
 
     /**
@@ -106,7 +111,7 @@ public class ReadData {
      * @return ArrayList of all attributes related to a ships combat abilities
      */
 
-    protected HashMap<Integer, String> getAttributes() {
+    protected HashMap<Integer, String> getAttributesFromSheet() {
         HashMap<Integer, String> list = new HashMap<>();
         Row row = getMainShipSheet().getRow(0);
         for (int i = 0; i < row.getLastCellNum(); i++) {
@@ -114,6 +119,11 @@ public class ReadData {
             list.put(i, cell.getStringCellValue());
         }
         return list;
+    }
+
+    public HashMap<String, String> getAttributes()
+    {
+        return attributes;
     }
 
     /*
@@ -125,7 +135,7 @@ public class ReadData {
     protected HashMap<String, String> getShipStats(String ship) {
 
         Cell cell = getCellFromColumnContainsStr(0, ship);
-        HashMap<Integer, String> attributes = getAttributes();
+        HashMap<Integer, String> attributes = getAttributesFromSheet();
         HashMap<String, String> stats = new HashMap<>();
         Row row = getMainShipSheet().getRow(cell.getRowIndex());
         for (int i = 0; i < row.getLastCellNum(); i++) {

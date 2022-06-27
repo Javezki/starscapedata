@@ -22,7 +22,7 @@ public class AppTest {
 
     @Test
     public void shouldAnswerWithTrue() {
-        HashMap<Integer, String> attributes = data.getAttributes();
+        HashMap<Integer, String> attributes = data.getAttributesFromSheet();
         for (int i = 0 ; i < attributes.size(); i++)
         {
             System.out.println(attributes.get(i));
