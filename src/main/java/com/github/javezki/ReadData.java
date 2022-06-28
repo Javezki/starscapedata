@@ -18,14 +18,11 @@ public class ReadData {
 
     public static File file;
 
-    private HashMap<String, String> attributes;
 
     // Constructor initalizes FileInputStream, no params
-    public ReadData(String ship) {
+    protected ReadData(String ship) {
         
         file = getFile();
-
-        this.attributes = getShipStats(ship);
     }
 
     protected File getFile()
@@ -121,18 +118,13 @@ public class ReadData {
         return list;
     }
 
-    public HashMap<String, String> getAttributes()
-    {
-        return attributes;
-    }
-
-    /*
+     /*
      * Get cell that contains ship then gets row for that ship
      * Iterates through the row and adds to hasmap that's keys are attributes 
      * Returns that map
      */
 
-    protected HashMap<String, String> getShipStats(String ship) {
+    protected HashMap<String, String> getShipAttributes(String ship) {
 
         Cell cell = getCellFromColumnContainsStr(0, ship);
         HashMap<Integer, String> attributes = getAttributesFromSheet();
@@ -152,15 +144,4 @@ public class ReadData {
         }
         return stats;
     }
-
-    /**
-     * 
-     * @param type Attribute enum 
-     * @return  Value of enum of ship
-     */
-    protected String getAttribute(ATTR_TYPE type)
-    {
-        return attributes.get(type.label);
-    }
-
 }
